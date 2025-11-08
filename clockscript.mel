@@ -1,9 +1,1 @@
-LunarHand.rotateZ = 0.5($customTime) ;
-float $customTime = time ;
-float $lunarRotate = LunarHand.rotateZ ;
-doorBack.translateZ = 
-
-if (LunarHand.rotateZ > 90){
-    
-test
-}
+standin
