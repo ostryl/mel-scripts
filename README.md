@@ -1,2 +1,2 @@
 # mel-scripts
-A collection of MEL scripts for use in Autodesk Maya.
+A collection of MEL and Python scripts for use in Autodesk Maya.
