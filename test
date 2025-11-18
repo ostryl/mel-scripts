@@ -16,7 +16,10 @@ buildingPhaseX = 10
 buildingPhaseZ = 10
 streetWidthX = 2
 streetWidthZ = 2
-
+buildingBaseRandMultX = 1
+buildingBaseRandMultZ = 1
+buildingSpireRandMultX = 2
+buildingSpireRandMultZ = 2
 
 for iterationZ in range(numIterationsZ):
     for iterationX in range(numIterationsX):
@@ -27,7 +30,7 @@ for iterationZ in range(numIterationsZ):
         myBuildingBaseDepthRandAdjusted = myBuildingBaseDepthRand + 7
         myBuildingBaseHeightRand = random.random()
         myBuildingBaseHeightRandAdjusted = myBuildingBaseHeightRand * 2 + 2
-        myBuildingBaseHeightCenter = myBuildingBaseHeightAdjusted * 0.5
+        myBuildingBaseHeightCenter = myBuildingBaseHeightRandAdjusted * 0.5
 
         myBuildingSpireWidthRand = random.random()
         myBuildingSpireWidthRandAdjusted = myBuildingSpireWidthRand * 1.5 + 5
