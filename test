@@ -65,3 +65,5 @@ for iterationZ in range(numIterationsZ):
         myRandR = random.random()
         myRandG = random.random()
         myRandB = random.random()
+        cmds.setAttr(mySpireShader + '.color', myRandR, myRandG, myRandB, type="double3")
+randomOperation = random.randint(1,5)
