@@ -24,21 +24,21 @@ buildingSpireRandRangeMultZ = 2
 for iterationZ in range(numIterationsZ):
     for iterationX in range(numIterationsX):
         #define vars
-        myBuildingBaseWidthRand = random.random()
-        myBuildingBaseWidthRandAdjusted = myBuildingBaseWidthRand + 7
-        myBuildingBaseDepthRand = random.random()
-        myBuildingBaseDepthRandAdjusted = myBuildingBaseDepthRand + 7
-        myBuildingBaseHeightRand = random.random()
-        myBuildingBaseHeightRandAdjusted = myBuildingBaseHeightRand * 2 + 2
-        myBuildingBaseHeightCenter = myBuildingBaseHeightRandAdjusted * 0.5
+        myBuildingBaseXRand = random.random()
+        myBuildingBaseXRandAdjusted = buildingPhaseX - streetWidthX - (buildingBaseRandRangeMultX * myBuildingBaseXRand)
+        myBuildingBaseZRand = random.random()
+        myBuildingBaseZRandAdjusted = myBuildingBaseZRand + 7
+        myBuildingBaseYRand = random.random()
+        myBuildingBaseYRandAdjusted = myBuildingBaseYRand * 2 + 2
+        myBuildingBaseYCenter = myBuildingBaseYRandAdjusted * 0.5
 
-        myBuildingSpireWidthRand = random.random()
-        myBuildingSpireWidthRandAdjusted = myBuildingSpireWidthRand * 1.5 + 5
-        myBuildingSpireDepthRand = random.random()
-        myBuildingSpireDepthRandAdjusted = myBuildingSpireDepthRand * 1.5 + 5
-        myBuildingSpireHeightRand = random.random()
-        myBuildingSpireHeightRandAdjusted = myBuildingSpireHeightRand * 20 + 10
-        myBuildingSpireHeightCenter = myBuildingSpireHeightRandAdjusted * 0.5
+        myBuildingSpireXRand = random.random()
+        myBuildingSpireXRandAdjusted = myBuildingSpireXRand * 1.5 + 5
+        myBuildingSpireZRand = random.random()
+        myBuildingSpireZRandAdjusted = myBuildingSpireZRand * 1.5 + 5
+        myBuildingSpireYRand = random.random()
+        myBuildingSpireYRandAdjusted = myBuildingSpireYRand * 20 + 10
+        myBuildingSpireYCenter = myBuildingSpireYRandAdjusted * 0.5
 
 
         #create geo
@@ -57,6 +57,11 @@ for iterationZ in range(numIterationsZ):
         cmds.hyperShade(assign=mySpireShader)
         #adjustments to geo
         cmds.select(myBuildingBase)
-        cmds.move(iterationX * 10, myBuildingBaseHeightCenter, iterationZ * 10)
+        cmds.move(iterationX * 10, myBuildingBaseYCenter, iterationZ * 10)
         cmds.select(myBuildingSpire)
-        cmds.move(iterationX * 10, myBuildingSpireHeightCenter + iterationZ * 10)
+        cmds.move(iterationX * 10, myBuildingSpireYCenter + iterationZ * 10)
+
+
+        myRandR = random.random()
+        myRandG = random.random()
+        myRandB = random.random()
