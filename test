@@ -16,10 +16,10 @@ buildingPhaseX = 10
 buildingPhaseZ = 10
 streetWidthX = 2
 streetWidthZ = 2
-buildingBaseRandMultX = 1
-buildingBaseRandMultZ = 1
-buildingSpireRandMultX = 2
-buildingSpireRandMultZ = 2
+buildingBaseRandRangeMultX = 1
+buildingBaseRandRangeMultZ = 1
+buildingSpireRandRangeMultX = 2
+buildingSpireRandRangeMultZ = 2
 
 for iterationZ in range(numIterationsZ):
     for iterationX in range(numIterationsX):
@@ -38,7 +38,7 @@ for iterationZ in range(numIterationsZ):
         myBuildingSpireDepthRandAdjusted = myBuildingSpireDepthRand * 1.5 + 5
         myBuildingSpireHeightRand = random.random()
         myBuildingSpireHeightRandAdjusted = myBuildingSpireHeightRand * 20 + 10
-
+        myBuildingSpireHeightCenter = myBuildingSpireHeightRandAdjusted * 0.5
 
 
         #create geo
@@ -59,4 +59,4 @@ for iterationZ in range(numIterationsZ):
         cmds.select(myBuildingBase)
         cmds.move(iterationX * 10, myBuildingBaseHeightCenter, iterationZ * 10)
         cmds.select(myBuildingSpire)
-        cmds.move(0,0,0)
+        cmds.move(iterationX * 10, myBuildingSpireHeightCenter + iterationZ * 10)
