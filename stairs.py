@@ -23,7 +23,7 @@ LocatorB = cmds.spaceLocator (name='LocatorB')
 #These pieces are temporary and should be removed. I need to replace StairWidth with the width of the selected object, and cmds.move will need to be based on the locator instead.
 StairWidth = 1
 cmds.select(LocatorA)
-cmds.move(5,5,5)
+cmds.move(-23,2.2,6)
 
 #The position X of the stairs should be the width of the distance between. The stairs should rotate to face the direction of the lower locator
 #There should be a way to add some random tilting to make the stairs look old.
@@ -43,6 +43,10 @@ Stairs = range(StairNumber)
 #If LocatorATranslateX > LocatorBTranslateX, StairTranslateX = LocatorATranslateX - (Stair width * the # current number of stairs)
 #Elseif LocatorStairTranslateX < LocatorTranslateX, StairTranslateX = LocatorATranslateX + (Stair width * the # current number of stairs)
 #Else 
+
+#If LocatorATranslateZ > 
+
+
 cmds.select (clear=True)
 for stair in Stairs:
     #Define vars
@@ -50,9 +54,63 @@ for stair in Stairs:
     cmds.duplicate('StairStep')
     StairIteration = str(stair+1)
     cmds.select('StairStep' + StairIteration)
-    cmds.move(stair * StairWidth, stair * StairWidth, stair * StairWidth)
-    cmds.select (clear=True)
-    print(stair)
+    Slope = (LocatorATranslateZ - LocatorBTranslateZ)-(LocatorATranslateX-LocatorBTranslateX)
+
+    if LocatorATranslateX > LocatorBTranslateX :
+
+        #cmds.move((LocatorATranslateX + (StairWidth * stair)), moveX=True, moveY=False, moveZ=False)
+        #so in this case -23 + (1 * 0)
+        #so it ends up being -23
+        cmds.move
+        #but we want it to be that stair 0 is at 0 and stair 23 is at -23
+        #ugh wtf
+        #I want the stairs to be placed at even intervals on a straight line from one point to another, from a central point
+
+        #the translation of the stair should be like, 
+
+        cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
+    else :
+        #cmds.move((LocatorATranslateX + (StairWidth * stair)), moveX=True, moveY=False, moveZ=False)
+        cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
+   
+        #let's say outerpoint is at -20. i want the stairs, starting at 0, 
+
+
+
+        #6 + (1*1)
+    #--Gotta figure it out for the others now
+
+
+
+
+    #if LocatorATranslateZ > LocatorBTranslateZ :
+        #cmds.move((LocatorATranslateZ + (StairWidth * stair)), moveX=False, moveY=False, moveZ=True)
+
+
+    #6 = 6 + (1 * 1)
+    #0 = 6 + (1 * 24)
+
+    # I want the translateZ of the stairs to equal 
+
+    #we need translatez to equal 6 for stair one and zero for stair 24
+
+
+    #else :
+        #cmds.move((LocatorATranslateZ + (StairWidth * stair)), moveX=False, moveY=False, moveZ=True)
+    #cmds.move(stair * StairWidth, stair * StairWidth, stair * StairWidth)
+    #This line needs to be fixed
+    #It gets worse as we go towards 24 and the number gets bigger
+    #when locatorAtranslateZ= -23, we need 1 * 24
+
+
+#StairStep 1 is great but the rest are way off
+
+
+
+
+
+
+cmds.select (clear=True)
 #Testing
 
 #StairRotation

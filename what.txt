@@ -1,0 +1,41 @@
+This part gets the length of the space between LocatorA and LocatorB, and then divides it by the width of the stairs-
+#and rounds it to the nearest integer. This determines the number of stairs that will be generated.
+
+OK.
+
+
+I have two points in 3D space, point A and point B. I want to place items at regular intervals along a straight line between those two points. 
+
+The number of intervals = the distance between the points divided by the width of the items and rounded to the nearest integer.
+
+
+I = rounded (D/W)
+
+
+The items are numbered. The lowest numbered item should be placed at whichever point has a lower Y value. 
+
+
+The distance may not equal the distance between the points divided by the width of the items and rounded to the nearest integer; it may be slightly
+less or greater than. If this is the case, 
+
+
+item number * (y dist / the number of intervals)
+item number * (x dist / the number of intervals)
+
+
+
+
+
+
+this is harder than i thought
+
+
+the X of the stairs should = The width of the stairs already put out
+
+
+the distance is from a 
+
+
+
+
+
