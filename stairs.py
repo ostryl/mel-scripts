@@ -39,6 +39,26 @@ LocatorBTranslateY = cmds.getAttr ('LocatorB.translateY')
 #and rounds it to the nearest integer. This determines the number of stairs that will be generated.
 StairNumber = round(((math.sqrt(((pow((LocatorBTranslateZ-LocatorATranslateZ), 2))+(pow((LocatorBTranslateX-LocatorATranslateX), 2)))))/StairWidth))
 
+
+UnitVector = ()
+
+#-----------------------------------------------
+    #Thinking
+    #So, I need to figure out how to place the points. What I want is to place a number of points, equal to StairNumber, on the line between 
+    #LocatorA and LocatorB.
+    #I want the location of each point along the vector to be 0 + (StairWidth * The number of stairs that have already been placed.)
+    #I want the vector to start at the locator with a lower Y value, but it's not essential.
+
+#-----------------------------------------------
+
+#How do I place a point at a certain distance on a line?
+
+#LineVector = (LocatorBTranslateX-LocatorATranslateX, LocatorBTranslateY-LocatorATranslateY, LocatorBTranslateZ-LocatorATranslateZ)
+#LineMagnitude = abs(math.sqrt((pow((LocatorBTranslateX-LocatorATranslateX), 2)+(pow((LocatorBTranslateZ-LocatorATranslateZ),2)))))
+#NormalDirectionVector = LineVector / LineMagnitude
+#StartY = min(LocatorATranslateY, LocatorBTranslateY)
+
+                    
 Stairs = range(StairNumber)
 #If LocatorATranslateX > LocatorBTranslateX, StairTranslateX = LocatorATranslateX - (Stair width * the # current number of stairs)
 #Elseif LocatorStairTranslateX < LocatorTranslateX, StairTranslateX = LocatorATranslateX + (Stair width * the # current number of stairs)
@@ -55,23 +75,25 @@ for stair in Stairs:
     StairIteration = str(stair+1)
     cmds.select('StairStep' + StairIteration)
     Slope = (LocatorATranslateZ - LocatorBTranslateZ)-(LocatorATranslateX-LocatorBTranslateX)
-
-    if LocatorATranslateX > LocatorBTranslateX :
+    #cmds.move(LocatorATranslateX + stair * ((LocatorBTranslateX-LocatorATranslateX)/(StairNumber-1)), moveX=True, moveY=False, moveZ=False)
+    #cmds.move(LocatorATranslateY + StartY * ((LocatorBTranslateY-LocatorATranslateY)/(StairNumber-1)), moveX=False, moveY=True, moveZ=False)
+    #cmds.move(LocatorATranslateZ + stair * ((LocatorBTranslateZ-LocatorATranslateZ)/(StairNumber-1)), moveX=False, moveY=False, moveZ=True)
+    #if LocatorATranslateX > LocatorBTranslateX :
 
         #cmds.move((LocatorATranslateX + (StairWidth * stair)), moveX=True, moveY=False, moveZ=False)
         #so in this case -23 + (1 * 0)
         #so it ends up being -23
-        cmds.move
+        #cmds.move
         #but we want it to be that stair 0 is at 0 and stair 23 is at -23
         #ugh wtf
         #I want the stairs to be placed at even intervals on a straight line from one point to another, from a central point
 
         #the translation of the stair should be like, 
 
-        cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
-    else :
+        #cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
+    #else :
         #cmds.move((LocatorATranslateX + (StairWidth * stair)), moveX=True, moveY=False, moveZ=False)
-        cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
+        #cmds.move((Slope * stair), moveX=True, moveY=False, moveZ=False)
    
         #let's say outerpoint is at -20. i want the stairs, starting at 0, 
 
