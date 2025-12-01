@@ -14,7 +14,7 @@ if 'StairStep' not in SelectedObj:
     elif Number > 1:
         sys.exit('You have multiple objects selected and none of them are named StairStep, please select your target object or name it StairStep!')
     else:
-        print('Stair building in progress...')
+        print('Stair building in progress. Hint: Move your locators!')
         cmds.rename (OriginalObj, 'StairStep')
 
 #---This part creates the locators.
@@ -72,13 +72,24 @@ for stair in Stairs:
         cmds.rotate(0, Rotate, 0,)
 
 cmds.select (clear=True)
-cmds.select('StairStep')
-cmds.rename('JustATempStair')
+
+cmds.select(allDagObjects=True)
+NeedToRename = cmds.ls(selection=True)
+if 'StairStep' in NeedToRename:
+    cmds.select('StairStep')
+    cmds.rename('JustATempStair')
+    if LocatorATranslateX == 0 and LocatorATranslateY == 0 and LocatorATranslateZ == 0 and LocatorBTranslateX == 0 and LocatorBTranslateY == 0 and LocatorBTranslateZ == 0:
+        cmds.select('JustATempStair')
+        cmds.rename('StairStep')
+    else:
+        cmds.select ("StairStep*")
+        cmds.polyUnite (centerPivot=True)
+        cmds.delete(ch=True)
+        cmds.select('JustATempStair')
+        cmds.rename('StairStep')
 cmds.select (clear=True)
-cmds.select ("StairStep*")
-#cmds.select('JustATempStair')
-#cmds.rename('StairStep')
-#cmds.select (clear=True)
+
+
 
 
 #I want the stairs to add an _# onto the end if the for loop has already been run. 
