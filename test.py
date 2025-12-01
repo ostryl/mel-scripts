@@ -1,3 +1,6 @@
+#THESE ARE CLASS NOTES, NOT MY CODE
+
+
 #lets go
 import maya.cmds as cmds
 import math
