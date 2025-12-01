@@ -4,10 +4,16 @@ import sys
 
 OriginalObj = cmds.ls(selection=True)
 
-cmds.select(allDagObjects=True)
+def SelectAll():
+    cmds.select(all=True)
+
+def ClearSelection():
+    cmds.select (clear=True)
+
+SelectAll()
+
 SelectedObj = cmds.ls(selection=True)
 Number= len(OriginalObj)
-
 if 'StairStep' not in SelectedObj:
     if Number == 0:
         sys.exit('You need to create or select an object!')
@@ -18,14 +24,14 @@ if 'StairStep' not in SelectedObj:
         cmds.rename (OriginalObj, 'StairStep')
 
 #---This part creates the locators.
-cmds.select(all=True)
+SelectAll()
 ThingsInScene = cmds.ls(selection=True)
 if 'LocatorA' not in ThingsInScene:
     LocatorA = cmds.spaceLocator (name='LocatorA')
 if 'LocatorB' not in ThingsInScene:
     LocatorB = cmds.spaceLocator (name='LocatorB')
 
-cmds.select(clear=True)
+ClearSelection()
 cmds.select('StairStep')
 
 #---This part gets the width of the selected model in the scene's units.
@@ -54,26 +60,28 @@ if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorA
     StairRotationDegrees = (math.degrees(StairRotationRadians)) + 90
 
 Stairs = range(StairNumber)
+ClearSelection()
+
+def MakeStairs():
+    for stair in Stairs:
+        cmds.duplicate('StairStep')
+        StairIteration = str(stair+1)
+        cmds.select('StairStep' + StairIteration)
+        cmds.rename('StairStep' + StairIteration)
+        DistanceToMove = stair * StairWidth
+        DistanceToMoveUp = stair * (StairHeight)
+        cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
+        cmds.move((LocatorATranslateY + ((DistanceToMoveUp/LineLength)*(LocatorBTranslateY-LocatorATranslateY))), moveX=False, moveY=True, moveZ=False)
+        cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
+        if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
+            Rotate = str(StairRotationDegrees) + 'deg'
+            cmds.rotate(0, Rotate, 0,)
+
+MakeStairs()
+
 cmds.select (clear=True)
-#cmds.namespace( add="A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Y:Z" )
 
-for stair in Stairs:
-    cmds.duplicate('StairStep')
-    StairIteration = str(stair+1)
-    cmds.select('StairStep' + StairIteration)
-    cmds.rename('StairStep' + StairIteration)
-    DistanceToMove = stair * StairWidth
-    DistanceToMoveUp = stair * (StairHeight)
-    cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
-    cmds.move((LocatorATranslateY + ((DistanceToMoveUp/LineLength)*(LocatorBTranslateY-LocatorATranslateY))), moveX=False, moveY=True, moveZ=False)
-    cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
-    if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
-        Rotate = str(StairRotationDegrees) + 'deg'
-        cmds.rotate(0, Rotate, 0,)
-
-cmds.select (clear=True)
-
-cmds.select(allDagObjects=True)
+SelectAll()
 NeedToRename = cmds.ls(selection=True)
 if 'StairStep' in NeedToRename:
     cmds.select('StairStep')
@@ -87,7 +95,7 @@ if 'StairStep' in NeedToRename:
         cmds.delete(ch=True)
         cmds.select('JustATempStair')
         cmds.rename('StairStep')
-cmds.select (clear=True)
+ClearSelection()
 
 
 
