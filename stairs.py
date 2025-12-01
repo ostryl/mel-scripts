@@ -106,8 +106,8 @@ def FunctWindow():
     WindowStatus = cmds.window("StairGen", exists=True)
     if WindowStatus == True:
         cmds.deleteUI("StairGen", window=True )
-    window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274], widthHeight=(100, 50) )
-    cmds.columnLayout(adjustableColumn=True, generalSpacing=20, margins=40)    
+    window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274], widthHeight=(100, 20) )
+    cmds.columnLayout(adjustableColumn=True, generalSpacing=20, margins=30)    
     cmds.button( label='Generate Stairs', backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394], command=('RunScript()'))
     cmds.button( label='Close', backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394], command=('cmds.deleteUI(\"' + window + '\", window=True)') )
     cmds.showWindow( window )
