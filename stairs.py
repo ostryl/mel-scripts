@@ -3,17 +3,20 @@ import math
 import sys
 
 OriginalObj = cmds.ls(selection=True)
-
+print(OriginalObj)
 def SelectAll():
-    cmds.select(all=True)
+    cmds.select(allDagObjects=True)
 
 def ClearSelection():
-    cmds.select (clear=True)
+    cmds.select(clear=True)
+
+def SelectBaseStair():
+    cmds.select('StairStep')
 
 SelectAll()
-
 SelectedObj = cmds.ls(selection=True)
 Number= len(OriginalObj)
+
 if 'StairStep' not in SelectedObj:
     if Number == 0:
         sys.exit('You need to create or select an object!')
@@ -32,7 +35,7 @@ if 'LocatorB' not in ThingsInScene:
     LocatorB = cmds.spaceLocator (name='LocatorB')
 
 ClearSelection()
-cmds.select('StairStep')
+SelectBaseStair()
 
 #---This part gets the width of the selected model in the scene's units.
 selectedStair = cmds.ls( selection=True )
@@ -78,23 +81,22 @@ def MakeStairs():
             cmds.rotate(0, Rotate, 0,)
 
 MakeStairs()
-
-cmds.select (clear=True)
-
+ClearSelection()
 SelectAll()
+
 NeedToRename = cmds.ls(selection=True)
 if 'StairStep' in NeedToRename:
-    cmds.select('StairStep')
+    SelectBaseStair()
     cmds.rename('JustATempStair')
     if LocatorATranslateX == 0 and LocatorATranslateY == 0 and LocatorATranslateZ == 0 and LocatorBTranslateX == 0 and LocatorBTranslateY == 0 and LocatorBTranslateZ == 0:
         cmds.select('JustATempStair')
-        cmds.rename('StairStep')
+        cmds.rename(OriginalObj)
     else:
         cmds.select ("StairStep*")
         cmds.polyUnite (centerPivot=True)
         cmds.delete(ch=True)
         cmds.select('JustATempStair')
-        cmds.rename('StairStep')
+        cmds.rename(OriginalObj)
 ClearSelection()
 
 
