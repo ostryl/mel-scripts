@@ -3,7 +3,6 @@ import math
 import sys
 
 OriginalObj = cmds.ls(selection=True)
-print(OriginalObj)
 def SelectAll():
     cmds.select(allDagObjects=True)
 
@@ -13,6 +12,25 @@ def ClearSelection():
 def SelectBaseStair():
     cmds.select('StairStep')
 
+# Make a new window
+def FunctWindow():
+    WindowStatus = cmds.window("StairGen", exists=True)
+    if WindowStatus == True:
+        cmds.deleteUI("StairGen", window=True )
+    window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274], widthHeight=(500, 100) )
+    cmds.paneLayout()    
+    cmds.button( label='Rerun Script' )
+    cmds.button( label='Close', command=('cmds.deleteUI(\"' + window + '\", window=True)') )
+    cmds.showWindow( window )
+
+
+
+FunctWindow()
+
+
+
+#window = cmds.window(title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274], widthHeight=(500, 100) )
+    
 
 SelectAll()
 SelectedObj = cmds.ls(selection=True)
