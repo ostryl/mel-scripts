@@ -2,17 +2,18 @@ import maya.cmds as cmds
 import math
 import sys
 
+cmds.select(allDagObjects=True)
 SelectedObj = cmds.ls(selection=True)
 Number= len(SelectedObj)
 
-#---This part makes you select one object to use as the stair.
-if Number == 0:
-    sys.exit('You need to select an object!')
-elif Number > 1:
-    sys.exit('You have multiple objects selected, please only select one!')
-else:
-    print('Stair building in progress...')
-    cmds.rename (SelectedObj, 'StairStep')
+if 'StairStep' not in SelectedObj:
+    if Number == 0:
+        sys.exit('You need to create an object!')
+    elif Number > 1:
+        sys.exit('You have multiple objects selected and none of them are named StairStep, please select your target object or name it StairStep!')
+    else:
+        print('Stair building in progress...')
+        cmds.rename (SelectedObj, 'StairStep')
 
 #---This part creates the locators.
 cmds.select(all=True)
@@ -44,7 +45,12 @@ LocatorBTranslateY = cmds.getAttr ('LocatorB.translateY')
 #--and rounds it to the nearest integer. This determines the number of stairs that will be generated.
 StairNumber = round(((math.sqrt(((pow((LocatorBTranslateZ-LocatorATranslateZ), 2))+(pow((LocatorBTranslateX-LocatorATranslateX), 2)))))/StairWidth))
 LineLength = math.sqrt((pow((LocatorBTranslateX-LocatorATranslateX), 2)+(pow((LocatorBTranslateZ-LocatorATranslateZ),2))))
-                  
+
+if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
+    Gradient = (LocatorBTranslateX-LocatorATranslateX)/(LocatorBTranslateZ-LocatorATranslateZ)
+    StairRotationRadians = math.atan(Gradient)
+    StairRotationDegrees = math.degrees(StairRotationRadians)
+
 Stairs = range(StairNumber)
 cmds.select (clear=True)
 
@@ -53,10 +59,14 @@ for stair in Stairs:
     StairIteration = str(stair+1)
     cmds.select('StairStep' + StairIteration)
     DistanceToMove = stair * StairWidth
-    DistanceToMoveUp = stair * (StairHeight * 2)
+    DistanceToMoveUp = stair * (StairHeight)
     cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
     cmds.move((LocatorATranslateY + ((DistanceToMoveUp/LineLength)*(LocatorBTranslateY-LocatorATranslateY))), moveX=False, moveY=True, moveZ=False)
     cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
+    if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
+        Rotate = str(StairRotationDegrees) + 'deg'
+        print(Rotate)
+        cmds.rotate(0, Rotate, 0,)
 
 cmds.select (clear=True)
 
