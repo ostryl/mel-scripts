@@ -2,6 +2,8 @@ import maya.cmds as cmds
 import math
 import sys
 
+OriginalObj = cmds.ls(selection=True)
+
 cmds.select(allDagObjects=True)
 SelectedObj = cmds.ls(selection=True)
 Number= len(SelectedObj)
@@ -13,7 +15,7 @@ if 'StairStep' not in SelectedObj:
         sys.exit('You have multiple objects selected and none of them are named StairStep, please select your target object or name it StairStep!')
     else:
         print('Stair building in progress...')
-        cmds.rename (SelectedObj, 'StairStep')
+        cmds.rename (OriginalObj, 'StairStep')
 
 #---This part creates the locators.
 cmds.select(all=True)
@@ -49,7 +51,7 @@ LineLength = math.sqrt((pow((LocatorBTranslateX-LocatorATranslateX), 2)+(pow((Lo
 if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
     Gradient = (LocatorBTranslateX-LocatorATranslateX)/(LocatorBTranslateZ-LocatorATranslateZ)
     StairRotationRadians = math.atan(Gradient)
-    StairRotationDegrees = math.degrees(StairRotationRadians)
+    StairRotationDegrees = (math.degrees(StairRotationRadians)) + 90
 
 Stairs = range(StairNumber)
 cmds.select (clear=True)
@@ -65,7 +67,6 @@ for stair in Stairs:
     cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
     if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorATranslateZ) != 0 :
         Rotate = str(StairRotationDegrees) + 'deg'
-        print(Rotate)
         cmds.rotate(0, Rotate, 0,)
 
 cmds.select (clear=True)
