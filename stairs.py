@@ -62,6 +62,7 @@ for stair in Stairs:
     cmds.select('StairStep' + StairIteration)
     DistanceToMove = stair * StairWidth
     cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
+    cmds.move((LocatorATranslateY + ((DistanceToMove/LineLength)*(LocatorBTranslateY-LocatorATranslateY))), moveX=False, moveY=True, moveZ=False)
     cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
 
 
