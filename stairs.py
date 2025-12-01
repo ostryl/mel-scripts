@@ -6,11 +6,11 @@ OriginalObj = cmds.ls(selection=True)
 
 cmds.select(allDagObjects=True)
 SelectedObj = cmds.ls(selection=True)
-Number= len(SelectedObj)
+Number= len(OriginalObj)
 
 if 'StairStep' not in SelectedObj:
     if Number == 0:
-        sys.exit('You need to create an object!')
+        sys.exit('You need to create or select an object!')
     elif Number > 1:
         sys.exit('You have multiple objects selected and none of them are named StairStep, please select your target object or name it StairStep!')
     else:
@@ -55,11 +55,13 @@ if (LocatorBTranslateX-LocatorATranslateX) != 0 and (LocatorBTranslateZ-LocatorA
 
 Stairs = range(StairNumber)
 cmds.select (clear=True)
+#cmds.namespace( add="A:B:C:D:E:F:G:H:I:J:K:L:M:N:O:P:Q:R:S:T:U:V:W:X:Y:Z" )
 
 for stair in Stairs:
     cmds.duplicate('StairStep')
     StairIteration = str(stair+1)
     cmds.select('StairStep' + StairIteration)
+    cmds.rename('StairStep' + StairIteration)
     DistanceToMove = stair * StairWidth
     DistanceToMoveUp = stair * (StairHeight)
     cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
@@ -70,8 +72,16 @@ for stair in Stairs:
         cmds.rotate(0, Rotate, 0,)
 
 cmds.select (clear=True)
+cmds.select('StairStep')
+cmds.rename('JustATempStair')
+cmds.select (clear=True)
+cmds.select ("StairStep*")
+#cmds.select('JustATempStair')
+#cmds.rename('StairStep')
+#cmds.select (clear=True)
 
 
+#I want the stairs to add an _# onto the end if the for loop has already been run. 
 
 #Okay and next, we need a GUI and some procedures
 #We need to be able to interact with the locators. How do I make that happen?
