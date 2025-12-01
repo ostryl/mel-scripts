@@ -13,9 +13,11 @@ def ClearSelection():
 def SelectBaseStair():
     cmds.select('StairStep')
 
+
 SelectAll()
 SelectedObj = cmds.ls(selection=True)
 Number= len(OriginalObj)
+
 
 if 'StairStep' not in SelectedObj:
     if Number == 0:
@@ -33,6 +35,7 @@ if 'LocatorA' not in ThingsInScene:
     LocatorA = cmds.spaceLocator (name='LocatorA')
 if 'LocatorB' not in ThingsInScene:
     LocatorB = cmds.spaceLocator (name='LocatorB')
+
 
 ClearSelection()
 SelectBaseStair()
@@ -85,6 +88,7 @@ ClearSelection()
 SelectAll()
 
 NeedToRename = cmds.ls(selection=True)
+
 if 'StairStep' in NeedToRename:
     SelectBaseStair()
     cmds.rename('JustATempStair')
