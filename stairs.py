@@ -81,7 +81,8 @@ def RunScript():
             cmds.select('StairStep' + StairIteration)
             cmds.rename('StairStep' + StairIteration)
             DistanceToMove = stair * StairWidth
-            DistanceToMoveUp = stair * (StairHeight)
+            StairYExtra = cmds.intSliderGrp('StairY', q=True, value=True)
+            DistanceToMoveUp = stair * (StairHeight * StairYExtra)
             cmds.move((LocatorATranslateX + ((DistanceToMove/LineLength)*(LocatorBTranslateX-LocatorATranslateX))), moveX=True, moveY=False, moveZ=False)
             cmds.move((LocatorATranslateY + ((DistanceToMoveUp/LineLength)*(LocatorBTranslateY-LocatorATranslateY))), moveX=False, moveY=True, moveZ=False)
             cmds.move((LocatorATranslateZ + ((DistanceToMove/LineLength)*(LocatorBTranslateZ-LocatorATranslateZ))), moveX=False, moveY=False, moveZ=True)
@@ -125,9 +126,10 @@ def FunctWindow():
     if WindowStatus == True:
         cmds.deleteUI("StairGen", window=True )
     window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274] )
-    cmds.columnLayout("Parent", margins=10) 
+    cmds.columnLayout("Parent", generalSpacing=5, margins=10, rs=5) 
 
     cmds.intSliderGrp('MergeStairs', label='Merge Stairs Toggle ', field=True, w=(300), h=(30), el=' Bool', minValue=0, maxValue=1, fieldMinValue=0, value=True, backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394])
+    cmds.intSliderGrp('StairY', label='Stair Y Transform ', field=True, w=(300), h=(30), el=' Int', minValue=-10, maxValue=10, fieldMinValue=0, value=1, backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394])
     cmds.rowLayout(generalSpacing=30, margins=30, nc=2, parent="Parent")    
     cmds.button( label='Close', backgroundColor=[0.42980392156862745, 0.3372549019607843, 0.41568627450980394], w=(100), h=(30), command=('cmds.deleteUI(\"' + window + '\", window=True)') )
     cmds.button( label='Generate Stairs', backgroundColor=[0.2980392156862745, 0.4372549019607843, 0.41568627450980394], w=(100), h=(30), command=('RunScript()'))
