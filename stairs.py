@@ -3,6 +3,11 @@ import math
 import sys
 
 def RunScript():
+    CheckLoc = cmds.ls(selection=True)
+    if 'LocatorA' in CheckLoc:
+        cmds.select ('LocatorA', deselect=True)
+    if 'LocatorB' in CheckLoc:
+        cmds.select ('LocatorB', deselect=True)
     OriginalObj = cmds.ls(selection=True)
     def SelectAll():
         cmds.select(allDagObjects=True)
@@ -20,8 +25,10 @@ def RunScript():
 
     if 'StairStep' not in SelectedObj:
         if Number == 0:
+            ClearSelection()
             sys.exit('You need to create or select an object!')
         elif Number > 1:
+            ClearSelection()
             sys.exit('You have multiple objects selected and none of them are named StairStep, please select your target object or name it StairStep!')
         else:
             print('Stair building in progress. Hint: Move your locators!')
@@ -96,19 +103,34 @@ def RunScript():
             cmds.rename(OriginalObj)
         else:
             cmds.select ("StairStep*")
-            cmds.polyUnite (centerPivot=True)
-            cmds.delete(ch=True)
-            cmds.select('JustATempStair')
-            cmds.rename(OriginalObj)
+            cmds.intSliderGrp('MergeStairs', q=True, value=True)
+
+            MergeTrue = cmds.intSliderGrp('MergeStairs', q=True, value=True)
+            if MergeTrue == True:
+                cmds.polyUnite (centerPivot=True)
+                cmds.delete(ch=True)
+                cmds.select('JustATempStair')
+                cmds.rename(OriginalObj)
+            else:
+                cmds.select('JustATempStair')
+                cmds.rename(OriginalObj)
+    else:
+        cmds.select('JustATempStair')
+        cmds.rename(OriginalObj)
+    
     ClearSelection()
 
 def FunctWindow():
     WindowStatus = cmds.window("StairGen", exists=True)
     if WindowStatus == True:
         cmds.deleteUI("StairGen", window=True )
-    window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274], widthHeight=(100, 20) )
-    cmds.columnLayout(adjustableColumn=True, generalSpacing=20, margins=30)    
-    cmds.button( label='Generate Stairs', backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394], command=('RunScript()'))
-    cmds.button( label='Close', backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394], command=('cmds.deleteUI(\"' + window + '\", window=True)') )
+    window = cmds.window("StairGen", title="Stair Generator", iconName='StairGen', backgroundColor = [0.1803921568627451, 0.20392156862745097, 0.25098039215686274] )
+    cmds.columnLayout("Parent", margins=10) 
+
+    cmds.intSliderGrp('MergeStairs', label='Merge Stairs Toggle ', field=True, w=(300), h=(30), el=' Bool', minValue=0, maxValue=1, fieldMinValue=0, value=True, backgroundColor=[0.2980392156862745, 0.3372549019607843, 0.41568627450980394])
+    cmds.rowLayout(generalSpacing=30, margins=30, nc=2, parent="Parent")    
+    cmds.button( label='Close', backgroundColor=[0.42980392156862745, 0.3372549019607843, 0.41568627450980394], w=(100), h=(30), command=('cmds.deleteUI(\"' + window + '\", window=True)') )
+    cmds.button( label='Generate Stairs', backgroundColor=[0.2980392156862745, 0.4372549019607843, 0.41568627450980394], w=(100), h=(30), command=('RunScript()'))
+
     cmds.showWindow( window )
 FunctWindow()
